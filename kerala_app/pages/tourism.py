@@ -1,6 +1,11 @@
 import streamlit as st
 import folium
 from streamlit_folium import folium_static
+import sys
+import os
+
+# Fix import issue: Ensure Python can find weather.py
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from weather import get_weather  # Import weather function
 
 # Set page configuration
@@ -44,9 +49,6 @@ destinations = {
         "best_time": "November to February"
     }
 }
-
-# Default location (center of Kerala)
-default_location = [10.8505, 76.2711] 
 
 # Sidebar: Select a destination
 st.sidebar.title("Tourist Destinations")
