@@ -16,6 +16,3 @@ st.markdown(
 
 st.write("### About the App")
 st.write("This interactive web app takes you on a journey through Kerala, showcasing its breathtaking tourist spots, vibrant culture, and mouthwatering food. Engage with interactive maps, quizzes, and authentic experiences.")
-
-# Sidebar Navigation
-st.sidebar.header("Explore More")  # Sidebar header only (no duplicate links)
