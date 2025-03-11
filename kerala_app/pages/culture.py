@@ -1,6 +1,6 @@
 import streamlit as st
 import datetime
-from googletrans import Translator
+from deep_translator import GoogleTranslator  # Using deep-translator instead
 
 # Set page configuration
 st.set_page_config(page_title="Culture - Kerala", layout="wide")
@@ -26,9 +26,8 @@ st.write(f"**About:** {festivals[selected_festival]['info']}")
 
 # English-to-Malayalam Translator
 st.subheader("🌍 English-to-Malayalam Translator")
-translator = Translator()
-
 text_to_translate = st.text_input("Enter text in English:")
+
 if text_to_translate:
-    translation = translator.translate(text_to_translate, src='en', dest='ml')
-    st.write("**Malayalam Translation:**", translation.text)
+    translation = GoogleTranslator(source='en', target='ml').translate(text_to_translate)
+    st.write("**Malayalam Translation:**", translation)
