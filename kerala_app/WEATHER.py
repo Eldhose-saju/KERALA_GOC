@@ -3,7 +3,7 @@ import streamlit as st
 
 # Function to fetch weather data using OpenWeatherMap API
 def get_weather(city):
-    api_key = "YOUR_OPENWEATHERMAP_API_KEY"  # Replace with your API key
+    api_key = "9ddb837cba46cd87bd38aeb20f85a600"  
     base_url = "http://api.openweathermap.org/data/2.5/weather"
     
     params = {"q": city, "appid": api_key, "units": "metric"}
