@@ -1,6 +1,5 @@
 import streamlit as st
-import datetime
-from deep_translator import GoogleTranslator  # Using deep-translator instead
+from deep_translator import GoogleTranslator  # Using deep-translator for translation
 
 # Set page configuration
 st.set_page_config(page_title="Culture - Kerala", layout="wide")
@@ -8,21 +7,9 @@ st.set_page_config(page_title="Culture - Kerala", layout="wide")
 # Title
 st.title("Explore Kerala's Rich Culture")
 
-# Festival Calendar
-st.subheader("🎉 Festival Calendar")
-
-festivals = {
-    "Onam": {"date": "August - September", "info": "Onam is Kerala's biggest festival, celebrated with pookalam, sadya, and Vallamkali (boat race)."},
-    "Vishu": {"date": "April 14", "info": "Vishu marks Kerala's New Year with Vishukkani, firecrackers, and feasts."},
-    "Thrissur Pooram": {"date": "April - May", "info": "A grand temple festival in Thrissur, famous for elephant processions and fireworks."},
-    "Attukal Pongala": {"date": "February - March", "info": "A women's only festival where devotees prepare pongala (sweet offering) for the goddess."},
-    "Theyyam": {"date": "December - April", "info": "A ritualistic performance art featuring colorful costumes and spiritual significance."}
-}
-
-selected_festival = st.selectbox("Select a festival to learn more:", list(festivals.keys()))
-
-st.write(f"**Date:** {festivals[selected_festival]['date']}")
-st.write(f"**About:** {festivals[selected_festival]['info']}")
+# Brief on Kerala's Culture
+st.subheader("About Kerala's Culture")
+st.write("Kerala, known as ‘God’s Own Country,’ boasts a rich cultural heritage blending traditions, art, and festivals. It is famous for classical dance forms like Kathakali and Mohiniyattam, vibrant festivals like Onam and Thrissur Pooram, and unique rituals like Theyyam. The cuisine, music, and literature reflect a deep-rooted history and diversity.")
 
 # English-to-Malayalam Translator
 st.subheader("🌍 English-to-Malayalam Translator")
