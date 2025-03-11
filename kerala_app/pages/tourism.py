@@ -47,6 +47,31 @@ destinations = {
         "location": [8.7379, 76.7163],
         "info": "Famous for cliffs, beaches, and the Janardhana Swamy Temple.",
         "best_time": "November to February"
+    },
+    "Bekal": {
+        "location": [12.4143, 75.0300],
+        "info": "Known for the historic Bekal Fort and stunning beach views.",
+        "best_time": "October to March"
+    },
+    "Athirappilly": {
+        "location": [10.2856, 76.5696],
+        "info": "Famous for the majestic Athirappilly Waterfalls, also known as the 'Niagara of India'.",
+        "best_time": "September to January"
+    },
+    "Vagamon": {
+        "location": [9.6850, 76.9057],
+        "info": "A picturesque hill station known for meadows, pine forests, and adventure activities.",
+        "best_time": "March to May"
+    },
+    "Ponmudi": {
+        "location": [8.7594, 77.1123],
+        "info": "A serene hill station near Trivandrum, great for trekking and scenic beauty.",
+        "best_time": "November to March"
+    },
+    "Thrissur": {
+        "location": [10.5276, 76.2144],
+        "info": "Known as the cultural capital of Kerala, famous for Thrissur Pooram festival.",
+        "best_time": "April to September"
     }
 }
 
