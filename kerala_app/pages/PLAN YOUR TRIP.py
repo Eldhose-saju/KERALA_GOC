@@ -1,5 +1,4 @@
 import streamlit as st
-from geopy.geocoders import Nominatim
 import requests
 
 # Set page configuration
@@ -7,63 +6,61 @@ st.set_page_config(page_title="Kerala Tour Planner", layout="wide")
 
 st.title("Plan Your Kerala Trip 🏝️")
 
-# Input fields for start and end locations
-start_location = st.text_input("Enter Starting Point")
-end_location = st.text_input("Enter Destination")
+# Function to fetch locations from OpenStreetMap (Overpass API)
+def get_places(category, lat, lon, radius=5000):
+    overpass_url = "http://overpass-api.de/api/interpreter"
+    query = f"""
+    [out:json];
+    (node["tourism"="{category}"](around:{radius},{lat},{lon});
+     node["amenity"="{category}"](around:{radius},{lat},{lon});
+    );
+    out body;
+    """
+    response = requests.get(overpass_url, params={'data': query})
+    data = response.json()
+    places = []
+    if "elements" in data:
+        for element in data["elements"]:
+            name = element["tags"].get("name", "Unnamed")
+            places.append(name)
+    return places
 
-def get_location_info(place):
-    geolocator = Nominatim(user_agent="kerala_trip_planner")
-    location = geolocator.geocode(place + ", Kerala, India")
-    if location:
-        return (location.latitude, location.longitude)
-    return None
+# User Inputs
+start_location = st.text_input("Enter Starting Point (Kerala)")
+destination = st.text_input("Enter Destination (Kerala)")
 
-def fetch_places(category, lat, lon):
-    api_url = f"https://api.example.com/places?category={category}&lat={lat}&lon={lon}"
-    response = requests.get(api_url)
-    if response.status_code == 200:
-        return response.json()
-    return []
-
-if start_location and end_location:
-    start_coords = get_location_info(start_location)
-    end_coords = get_location_info(end_location)
+if start_location and destination:
+    st.subheader("Trip Details")
     
-    if start_coords and end_coords:
-        st.write(f"**Starting Point:** {start_location}")
-        st.write(f"**Destination:** {end_location}")
-        
-        # Fetch details along the route
-        attractions = fetch_places("tourist_attractions", *end_coords)
-        food_spots = fetch_places("restaurants", *end_coords)
-        hospitals = fetch_places("hospitals", *end_coords)
-        petrol_pumps = fetch_places("petrol_pumps", *end_coords)
-        
-        # Display information
-        st.subheader("Popular Attractions")
-        for place in attractions:
-            st.write(f"- {place['name']}")
-        
-        st.subheader("Best-Rated Food Spots")
-        for food in food_spots:
-            st.write(f"- {food['name']}")
-        
-        st.subheader("Hospitals Along the Way")
-        for hospital in hospitals:
-            st.write(f"- {hospital['name']}")
-        
-        st.subheader("Petrol Pumps on the Route")
-        for pump in petrol_pumps:
-            st.write(f"- {pump['name']}")
-        
-        # Show on map button
-        if st.button("Show on Map 🗺️"):
-            st.session_state["map_data"] = {
-                "start": start_coords,
-                "end": end_coords,
-                "attractions": attractions,
-                "food": food_spots,
-                "hospitals": hospitals,
-                "petrol_pumps": petrol_pumps
-            }
-            st.switch_page("pages/MAP.py")
+    # Fetch and display popular places
+    st.write("### Popular Places to Visit")
+    places_to_visit = get_places("attraction", 10.8505, 76.2711)  # Approximate Kerala center
+    st.write(places_to_visit if places_to_visit else "No tourist spots found.")
+    
+    # Fetch and display best-rated food spots
+    st.write("### Best Rated Food Spots")
+    food_spots = get_places("restaurant", 10.8505, 76.2711)
+    st.write(food_spots if food_spots else "No food spots found.")
+    
+    # Fetch and display hospitals
+    st.write("### Hospitals on the Way")
+    hospitals = get_places("hospital", 10.8505, 76.2711)
+    st.write(hospitals if hospitals else "No hospitals found.")
+    
+    # Fetch and display petrol pumps
+    st.write("### Petrol Pumps on the Way")
+    petrol_pumps = get_places("fuel", 10.8505, 76.2711)
+    st.write(petrol_pumps if petrol_pumps else "No petrol pumps found.")
+    
+    # Show on Map Button
+    if st.button("Show on Map"):
+        st.session_state["map_data"] = {
+            "start": start_location,
+            "end": destination,
+            "places_to_visit": places_to_visit,
+            "food_spots": food_spots,
+            "hospitals": hospitals,
+            "petrol_pumps": petrol_pumps
+        }
+        st.switch_page("MAP.py")  # Redirect to map page
+
