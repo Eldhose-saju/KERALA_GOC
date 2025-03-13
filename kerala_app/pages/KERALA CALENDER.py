@@ -1,20 +1,37 @@
 import streamlit as st
-from deep_translator import GoogleTranslator  # Using deep-translator for translation
+import datetime
 
-# Set page configuration
-st.set_page_config(page_title="Culture - Kerala", layout="wide")
+# Malayalam months and important festivals
+kerala_calendar = {
+    "Chingam": ["Onam - Aug/Sep"],
+    "Kanni": ["Mahanavami - Sep/Oct", "Vijayadashami - Sep/Oct"],
+    "Thulam": ["Deepavali - Oct/Nov"],
+    "Vrischikam": ["Mandala Pooja Begins - Nov/Dec"],
+    "Dhanu": ["Christmas - Dec 25"],
+    "Makaram": ["Makaravilakku - Jan 14"],
+    "Kumbham": ["Shivaratri - Feb/Mar"],
+    "Meenam": ["Attukal Pongala - Feb/Mar", "Vishu - Apr 14"],
+    "Medam": ["Thrissur Pooram - Apr/May"],
+    "Edavam": ["Vaikasi Vishakam - May/Jun"],
+    "Midhunam": ["Ramzan - Varies"],
+    "Karkidakam": ["Karkidaka Vavu - Jul/Aug"]
+}
 
-# Title
-st.title("Explore Kerala's Rich Culture")
+# Get current Malayalam month
+current_month_index = datetime.datetime.now().month - 1
+malayalam_months = list(kerala_calendar.keys())
+current_malayalam_month = malayalam_months[current_month_index % 12]
 
-# Brief on Kerala's Culture
-st.subheader("About Kerala's Culture")
-st.write("Kerala, known as ‘God’s Own Country,’ boasts a rich cultural heritage blending traditions, art, and festivals. It is famous for classical dance forms like Kathakali and Mohiniyattam, vibrant festivals like Onam and Thrissur Pooram, and unique rituals like Theyyam. The cuisine, music, and literature reflect a deep-rooted history and diversity.")
+st.title("📅 Kerala Calendar 2025")
 
-# English-to-Malayalam Translator
-st.subheader("🌍 English-to-Malayalam Translator")
-text_to_translate = st.text_input("Enter text in English:")
+# Dropdown to select month
+selected_month = st.selectbox("Select a Malayalam Month", malayalam_months, index=current_month_index % 12)
 
-if text_to_translate:
-    translation = GoogleTranslator(source='en', target='ml').translate(text_to_translate)
-    st.write("**Malayalam Translation:**", translation)
+# Display festivals of selected month
+st.subheader(f"Festivals in {selected_month}")
+festivals = kerala_calendar.get(selected_month, [])
+if festivals:
+    for festival in festivals:
+        st.write(f"- {festival}")
+else:
+    st.write("No major festivals this month.")
