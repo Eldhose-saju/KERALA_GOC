@@ -1,7 +1,7 @@
 import streamlit as st
 
-# Set page configuration
-st.set_page_config(page_title="Kerala: God's Own Country", layout="wide")
+# page configuration
+st.set_page_config(page_title="Kerala: God's Own Countryyy", layout="wide")
 
 # Main Content
 st.markdown(
